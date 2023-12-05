@@ -11,6 +11,9 @@ jobs:
       # Job for Minify-JS
       - name: Minify-JS Action
         uses: jossydevers/minify-js@v1.0.0
+        with:
+          directory: 'index.html' # (OPTIONAL)
+          output: 'index.min.html' # (OPTIONAL)
           
       # Auto-commit to repository
       - uses: stefanzweifel/git-auto-commit-action@v4
