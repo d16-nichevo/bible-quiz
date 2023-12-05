@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+	*, *:before, *:after {
+		box-sizing: inherit;
+	}
+
+	html {
+		background-color: grey;
+		font-family: sans-serif;
+		font-size: 20px;			
+	}
+	
+	body {
+		background-color: white;
+		margin: 0 auto;
+		max-width: 20rem;	
+		padding: 1rem 2rem;
+	}
+	
+	.quiz-item h1 {
+		font-size: 100%;
+	}
+	
+	.quiz-item h2 {
+		font-size: 150%;
+	}
+	
+	.quiz-item .answer {
+		padding-left: 1rem;
+		text-indent: -1.1rem;
+	}
+	
+	.quiz-item:not(.answered) .answer {
+		cursor: pointer;
+	}
+	
+	.quiz-item:not(.answered) .answer:before,
+	.quiz-item.answered .answer:not(.chosen):before	{
+		content: '☐ ';
+	}
+	
+	.quiz-item.answered .answer.chosen:before,
+	.quiz-item:not(.answered) .answer:hover:before,
+	.quiz-item:not(.answered) .answer:active:before,
+	.quiz-item:not(.answered) .answer:focus:before	{
+		content: '☒ '; /* Possible alternate: ☑ */
+	}
+	
+	.quiz-item.answered .answer:not(.chosen) {
+		color: lightgrey;
+	}
+	
+	.quiz-item:not(.answered) .answer:hover,
+	.quiz-item:not(.answered) .answer:active,
+	.quiz-item:not(.answered) .answer:focus	{
+		text-decoration: underline;
+	}
+
+	.wrong:not(.chosen) {
+		display: none;
+	}
+</style>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script defer="true">
+	// All of the items in the quiz:
+	const quizItems = [
+		// ["Question", ["Answer 1", "First scripture supporting answer 1", "Second scripture supporting answer 1"], ["Answer 2", "First scripture supporting answer 2", "Second scripture supporting answer 2"]],
+		["How did Judas die?", ["Suicide by hanging.", "Matthew 27:5"], ["Disembowled in the middle of a field.", "Acts 1:18"]],
+		["Did Judas identify Jesus with a kiss?", ["Yes.", "Matthew 26:47-49", "Mark 14:43-45", "Luke 22:47-48"], ["No. Jesus identified himself.", "John 18:3-5"]],
+		["When were humans created?", ["Before animals were created.", "Genesis 2:18-19"], ["After animals were created.", "Genesis 1:25-27"]],
+		["How many of each clean animal entered the ark?", ["Two.", "Genesis 6:19", "Genesis 7:8-9", "Genesis 7:14-15"], ["Seven.", "Genesis 7:2"]],
+		["How long did the flood last?", ["40 days.", "Genesis 7:17"], ["150 days.", "Genesis 7:24", "Genesis 8:3"]],
+		["Has anyone seen God?", ["Yes.", "Genesis 32:30", "Exodus 33:11", "Exodus 24:9-11", "Numbers 14:14", "Deuteronomy 5:4", "Baruch 3:38", "Ezekiel 20:35", "Isaiah 6:1-2"], ["No.", "Exodus 33:20", "John 1:18", "1 John 4:12", "John 6:46", "1 Timothy 6:16"]],
+	];
+	
+	// The books in the SAB, with the SAB code for each:
+	const sabBooks = {
+		"Genesis":"gen",
+		"Exodus":"ex",
+		"Leviticus":"lev",
+		"Numbers":"num",
+		"Deuteronomy":"dt",
+		"Joshua":"jos",
+		"Judges":"jg",
+		"Ruth":"ru",
+		"1 Samuel":"1sam",
+		"2 Samuel":"2sam",
+		"1 Kings":"1kg",
+		"2 Kings":"2kg",
+		"1 Chronicles":"1chr",
+		"2 Chronicles":"2chr",
+		"Ezra":"ezra",
+		"Nehemiah":"neh",
+		"Esther":"est",
+		"Job":"job",
+		"Psalms":"ps",
+		"Proverbs":"pr",
+		"Ecclesiastes":"ec",
+		"The Song of Solomon":"sofs",
+		"Isaiah":"is",
+		"Jeremiah":"jer",
+		"Lamentations":"lam",
+		"Ezekiel":"ezek",
+		"Daniel":"dan",
+		"Hosea":"hos",
+		"Joel":"jl",
+		"Amos":"am",
+		"Obadiah":"ob",
+		"Jonah":"jon",
+		"Micah":"mic",
+		"Nahum":"nah",
+		"Habakkuk":"hab",
+		"Zephaniah":"zeph",
+		"Haggai":"hag",
+		"Zechariah":"zech",
+		"Malachi":"mal",
+		"Matthew":"mt",
+		"Mark":"mk",
+		"Luke":"lk",
+		"John":"jn",
+		"Acts":"acts",
+		"Romans":"rom",
+		"1 Corinthians":"1cor",
+		"2 Corinthians":"2cor",
+		"Galatians":"gal",
+		"Ephesians":"eph",
+		"Philippians":"phil",
+		"Colossians":"col",
+		"1 Thessalonians":"1th",
+		"2 Thessalonians":"2th",
+		"1 Timothy":"1tim",
+		"2 Timothy":"2tim",
+		"Titus":"tit",
+		"Philemon":"philem",
+		"Hebrews":"heb",
+		"James":"jas",
+		"1 Peter":"1pet",
+		"2 Peter":"2pet",
+		"1 John":"1jn",
+		"2 John":"2jn",
+		"3 John":"3jn",
+		"Jude":"jude",
+		"Revelation":"rev",
+		"1 Machabees":"1mac",
+		"2 Machabees":"2mac",
+		"Baruch":"baruch",
+		"Daniel":"daniel",
+		"Ecclesiasticus / Sirach":"eccli",
+		"Esther":"esther",
+		"Judith":"judith",
+		"Tobias":"tobit",
+		"Wisdom":"wisdom",
+	};
+	
+	// Convert a human-readable scripture reference into a URL for the SAB.
+	// Example: John 14:3 would be https://skepticsannotatedbible.com/jn/14.html#3
+	function getSabLinkFromVerse(verse) {
+		var split = verse.split(/[\s\:\-]+/);
+		var verse = "https://skepticsannotatedbible.com/" + sabBooks[split[0]] + "/" + split[1] + ".html#" + split[2];
+		return verse;
+	}
+	
+	// https://stackoverflow.com/a/16427747
+	function isLocalStorageAvailable() {
+		var test = 'test';
+		try {
+			localStorage.setItem(test, test);
+			localStorage.removeItem(test);
+			return true;
+		} catch(e) {
+			return false;
+		}
+	}
+	
+	// https://stackoverflow.com/a/53758827
+	function shuffle(array, seed) {
+		var m = array.length, t, i;
+		while (m) {
+			i = Math.floor(random(seed) * m--);
+			t = array[m];
+			array[m] = array[i];
+			array[i] = t;
+			++seed;
+		}
+		return array;
+	}
+
+	// https://stackoverflow.com/a/53758827
+	function random(seed) {
+		var x = Math.sin(seed++) * 10000; 
+		return x - Math.floor(x);
+	}
+
+	$( document ).ready(function() {
+	
+		// Shuffle questions. Use an existing seed if we have one.
+		var seed;
+		if(isLocalStorageAvailable() && localStorage.getItem("seed")){
+			seed = localStorage.getItem("seed");
+		}
+		else {
+			seed = Date.now();
+			localStorage.setItem("seed", seed);
+		}
+		shuffle(quizItems, seed);
+	
+		// Reset the quiz:
+		$("#reset").on("click", function() {
+			localStorage.clear();
+			location.reload();
+		});
+	
+		// When a user selects an answer to a quiz item, show them
+		// the appropriate response:
+		$(".quiz-items").on("click", ".answer", function() {
+			var quizItem = $(this).closest(".quiz-item");
+			var quizItemIndex = $(quizItem).index(".quiz-item");
+			if(!quizItem.is(".answered")) {
+				if($(this).is(".answer-1")) {
+					quizItem.find(".wrong-1").slideDown();
+					localStorage.setItem(quizItemIndex, 0);
+				}
+				else {
+					quizItem.find(".wrong-2").slideDown();
+					localStorage.setItem(quizItemIndex, 1);
+				}
+				$(this).addClass("chosen");
+				quizItem.addClass("answered");
+			}
+		});
+	
+		// Generate the HTML for the quiz items:
+		var qhtml = "";
+		var r1html = "";
+		var r2html = "";
+		var previousAnswer = 0;
+		quizItems.forEach(function (quizItem, i) {
+			// Last answer, from local storage:
+			if(isLocalStorageAvailable() && localStorage.getItem(i)){
+				previousAnswer = localStorage.getItem(i);
+			}
+			else {
+				previousAnswer = -1;
+			}
+		
+			// Generate the references:
+			r1html = "";
+			quizItem[1].forEach(function (reference, j) {
+				if(j > 0) {
+					r1html += `<li><a href="${getSabLinkFromVerse(reference)}" target="_blank">${reference}</a></li>`;				
+				}
+			});
+			r2html = "";
+			quizItem[2].forEach(function (reference, j) {
+				if(j > 0) {
+					r2html += `<li><a href="${getSabLinkFromVerse(reference)}" target="_blank">${reference}</a></li>`;								
+				}
+			});
+			
+			// Generate the quiz item:			
+			qhtml = `
+				<div class="quiz-item ${previousAnswer >= 0 ? 'answered' : ''}"
+					data-quiz-item-index="${i}">
+					<h1>Question ${i+1}</h1>
+					<h2>${quizItem[0]}</h2>
+					<p class="answer answer-1 ${previousAnswer == 0 ? 'chosen' : ''}">${quizItem[1][0]}</p>
+					<p class="answer answer-2 ${previousAnswer == 1 ? 'chosen' : ''}">${quizItem[2][0]}</p>
+					<div class="wrong wrong-1 ${previousAnswer == 0 ? 'chosen' : ''}">
+						<h1>❌ Wrong!</h1>
+						<p>Scriptural references:</p>
+						<ul>
+							${r2html}
+						</ul>
+					</div>
+					<div class="wrong wrong-2 ${previousAnswer == 1 ? 'chosen' : ''}">
+						<h1>❌ Wrong!</h1>
+						<p>Scriptural references:</p>
+						<ul>
+							${r1html}
+						</ul>
+					</div>
+				</div>
+				<hr/>
+			`;
+			$('.quiz-items').append(qhtml);			
+		});
+	});
+</script>
+</head>
+<body>
+<div class="quiz-items"></div>
+<p>For more information about this quiz, <a href="#">click here</a>.</p>
+<p>To reset the quiz, <a href="#" id="reset">click here</a>.</p>
+</body>
+</html>
