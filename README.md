@@ -24,7 +24,7 @@ This project was inspired by:
 # FAQ
 
 1. ***What's the point of this quiz?***
-   * It's designed to be given to people who believe the Bible to be without error. The hope is that the "hands-on" nature of this quiz commuicates this idea in a way that simple debate might not be able to. It ***might*** just sink in a little better than standard rhetoric. Basically: it's meant to be a tool in the online atheist's arsenal.
+   * It's designed to be given to people who believe the Bible to be without error. The hope is that the "hands-on" nature of this quiz commuicates that the Bible contains contradictions in a way that simple debate might not be able to. Basically: it's meant to be a tool in the online atheist's arsenal.
 1. ***But none of these are actual contradictions, if you understand the Bible fully.***
    * Is that true for *all* of them? Oh. No problems -- I guess I was mistaken then! 😅
 1. ***Why did you put these contradictions in the quiz, and not other ones?***
