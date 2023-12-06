@@ -17,7 +17,7 @@ jobs:
         with:
           node-version: '16'
       - run: sudo apt-get install minify
-      - run: minify -o index-min.html index.html
+      - run: minify -o minified/index.html index.html
       
       # Push changes to `gh-pages` branch
       - run: |
