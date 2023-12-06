@@ -12,8 +12,7 @@ About the quiz:
 * The quiz is multi-choice, with each question having exactly two answers.
 * No matter what option the user picks, they are told they are ❌**Wrong**.
 * Scriptural citations are given to show the user why they are wrong, with links to chapter and verse.
-  * This is the gimmick of the quiz. ***These citations are correct.*** The reason both answers can be wrong is because the Bible contains [contradictions](https://skepticsannotatedbible.com/first/contra2_list.html). In other words, for the questions in this quiz, there are at least two valid answers. We show the user scriptural refernces to the answer they did not pick.
-    * A friendlier, kinder version of this quiz could let every answer be ✅Correct. But what's the fun in that?
+  * This is the gimmick of the quiz. ***These citations are correct.*** The reason both answers can be wrong is because the Bible contains [contradictions](https://skepticsannotatedbible.com/first/contra2_list.html). In other words, for the questions in this quiz, there are at least two valid answers. We show the user scriptural refernces to the answer they ***did not*** pick. A friendlier, kinder version of this quiz could let every answer be ✅**Correct**. But what's the fun in that?
 
 # Inspiration
 
@@ -27,7 +26,7 @@ This project was inspired by:
 1. ***What's the point of this quiz?***
    * It's designed to be given to people who believe the Bible to be without error. The hope is that the "hands-on" nature of this quiz commuicates this idea in a way that simple debate might not be able to. It ***might*** just sink in a little better than standard rhetoric. Basically: it's meant to be a tool in the online atheist's arsenal.
 1. ***But none of these are actual contradictions, if you understand the Bible fully.***
-   * That's true for *all* of them? Well, no problems -- I guess I was mistaken then! 😅
+   * Is that true for *all* of them? Oh. No problems -- I guess I was mistaken then! 😅
 1. ***Why did you put these contradictions in the quiz, and not other ones?***
    * I wanted to choose contradictions that seemed particular indefensible. In other words, I was avoiding "weak" contradictions. Obviously this is fairly subjective.
 1. ***Why are the questions randomly ordered?***
@@ -42,3 +41,5 @@ This project was inspired by:
 1. ***I want to add my own questions!***
    * Go ahead! This is why I put this on GitHub. [Fork it!](https://heardlibrary.github.io/digital-scholarship/manage/control/github/fork/) I've added comments so the HTML code should be easy enough to figure out, even if you're not super-technical.
    * Be sure not to try edit the minified file (see above).
+1. ***How do I contact the author?***
+   * My contact information can be found [here](https://deck16.net/contact).
