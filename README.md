@@ -12,7 +12,7 @@ About the quiz:
 * The quiz is multi-choice, with each question having exactly two answers.
 * No matter what option the user picks, they are told they are ❌**Wrong**.
 * Scriptural citations are given to show the user why they are wrong, with links to chapter and verse.
-  * This is the gimmick of the quiz. ***These citations are correct.*** The reason both answers can be wrong is because the Bible contains [contradictions](https://skepticsannotatedbible.com/first/contra2_list.html). In other words, for the questions in this quiz, there are at least two valid answers. We show the user scriptural refernces to the answer they ***did not*** pick. A friendlier, kinder version of this quiz could let every answer be ✅**Correct**. But what's the fun in that?
+  * This is the gimmick of the quiz. ***These citations are correct.*** The reason both answers can be wrong is because the Bible contains [contradictions](https://skepticsannotatedbible.com/first/contra2_list.html). In other words, for the questions in this quiz, there are at least two valid answers. We show the user scriptural references to the answer they ***did not*** pick. A friendlier, kinder version of this quiz could let every answer be ✅**Correct**. But what's the fun in that?
 
 # Inspiration
 
