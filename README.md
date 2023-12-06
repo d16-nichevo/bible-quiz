@@ -1,6 +1,6 @@
 # Contradictions Bible Quiz
 
-An HTML quiz designed to highlight contradictions in the Bible. Give it to your Bible-loving friends and see how they perform!
+An online quiz designed to highlight contradictions in the Bible. Give it to your Bible-loving friends and see how they perform!
 
 The quiz can be accessed by the link below. (This is the link you should share with your Bible-loving friends.)
 
