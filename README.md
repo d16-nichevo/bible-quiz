@@ -20,6 +20,7 @@ This project was inspired by:
 
 1. [This video](https://www.youtube.com/watch?v=RB3g6mXLEKk) by [NonStampCollector](nonstampcollector.com).
 1. The [Contradictions Page](https://skepticsannotatedbible.com/first/contra2_list.html) on [The Skeptic's Annotated Bible](https://skepticsannotatedbible.com/).
+1. An [article](https://www.bartehrman.com/contradictions-in-the-bible/) by Marko Marina.
 
 # FAQ
 
